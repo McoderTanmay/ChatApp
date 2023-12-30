@@ -1,0 +1,20 @@
+
+.login{
+    align-self: center;
+    margin-bottom: 1em;
+    font-size: 24px;
+}
+.loginBtn{
+    width: 100%;
+}
+.inputText{
+    background-color: #EBEBEB !important;
+}
+.create{
+    align-self: center;
+    margin-top: 1em;
+}
+.create > a{
+    text-decoration: none;
+    color: black;
+}
