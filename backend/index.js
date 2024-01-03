@@ -1,6 +1,9 @@
 const express=require('express');
 const app=express();
+const cors = require('cors');
+
 app.use(express.json());
+app.use(cors());
 
 const model=require('./model');
 const USER_ROUTER=require('./routers/accounts');
@@ -18,6 +21,6 @@ model.db_config
     process.exit();
 });
 
-app.listen(3000,()=>{
-    console.log('App is running on port 3000');
+app.listen(5000,()=>{
+    console.log('App is running on port 5000');
 });

@@ -41,6 +41,7 @@ module.exports = {
   async login(req, res) {
     let UserName = req.body.UserName;
     let password = req.body.password;
+    console.log("in login",req.body);
     try {
       let authData = await userQuery.getByUserName(UserName);
       bcrypt.compare(password,authData.password).then((result)=>{

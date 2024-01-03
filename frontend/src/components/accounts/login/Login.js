@@ -1,7 +1,29 @@
+import { useState } from "react";
 import styles from "./login.module.css";
 import { Link } from "react-router-dom";
 
-function Login() {
+function Login(props) {
+  const [enteredUsername, setEnteredUsername]=useState('');
+  const [enteredPassword, setEnteredPassword]=useState('');
+
+  const userNameChangeHandeler=(event)=>{
+    setEnteredUsername(event.target.value);
+  };
+  const passwordChangeHandeler=(event)=>{
+    setEnteredPassword(event.target.value)
+  }
+  
+  const submitHandeler=(event)=>{
+    event.preventDefault();
+    const data={
+      UserName:enteredUsername,
+      password:enteredPassword,
+    }
+    
+    props.onLogin(data);
+    setEnteredPassword('');
+    setEnteredUsername('');
+  }
   return (
     <>
       <div className={styles.login}>Login</div>
@@ -15,6 +37,8 @@ function Login() {
             className={`form-control ${styles.inputText}`}
             id="exampleInputEmail1"
             aria-describedby="emailHelp"
+            value={enteredUsername}
+            onChange={userNameChangeHandeler}
           />
         </div>
         <div className="mb-3">
@@ -25,9 +49,11 @@ function Login() {
             type="password"
             className={`form-control ${styles.inputText}`}
             id="exampleInputPassword1"
+            value={enteredPassword}
+            onChange={passwordChangeHandeler}
           />
         </div>
-        <button type="submit" className={`btn btn-primary ${styles.loginBtn}`}>
+        <button type="submit" onClick={submitHandeler} className={`btn btn-primary ${styles.loginBtn}`}>
           Login
         </button>
       </form>
