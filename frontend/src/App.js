@@ -1,21 +1,46 @@
-import { Routes, Route, json } from 'react-router-dom';
+import { Routes, Route, json} from 'react-router-dom';
 import './App.css';
 import Login from './components/accounts/login/Login';
 import Signin from './components/accounts/signin/Signin';
 import Cover from './components/accounts/Cover';
+import Index from './components/main-app/Index';
+import Nav from './components/nav/Nav';
+import { useEffect, useState } from 'react';
 
 function App() {
+  const [user, setUser] = useState(null);
+  //login
   const  loginData= async (data)=>{
-    console.log(JSON.stringify(data));
     try {
-      const response= await fetch('http://localhost:5000/accounts/login',{
+      await fetch('http://localhost:5000/accounts/login',{
         method:'POST',
         body:JSON.stringify(data),
-        // mode:'no-cors',
         headers:{
           'Content-Type':'application/json'
         }
       }).then((response) => response.json())
+      .then((result) => {
+        console.log(result);
+        localStorage.setItem("User",JSON.stringify(result.data));
+        setUser(JSON.stringify(result.data));
+      })
+      .catch((err) => {
+         console.log("error",err.message);
+      });
+    } catch (error) {
+      console.log(' 1',error);
+      console.log(error.massage);
+    }
+  }
+//signup
+  async function signUpData(data){
+    await fetch('http://localhost:5000/accounts/signin',{
+        method:'POST',
+        body:JSON.stringify(json.parse(data)),
+        headers:{
+          'Content-Type':'application/json'
+        }
+      })
       .then((data) => {
          console.log(data);
          // Handle data
@@ -23,18 +48,17 @@ function App() {
       .catch((err) => {
          console.log("error",err.message);
       });
-      // const token = await response.json();
-      // console.log(token)
-    } catch (error) {
-      console.log(' 1',error);
-      console.log(error.massage);
-    }
   }
+
+  useEffect(()=>{
+    setUser(localStorage.getItem("User"));
+  },[])
   return (
     <div className="App">
+      <Nav/>
       <Routes>
-        <Route path='/signin'element={<Cover component={<Signin/>}/>}/>
-        <Route path='/' element={<Cover component={<Login onLogin={loginData}/>}/>}/>
+        <Route path='/signin'element={<Cover component={<Signin onSignUp={signUpData}/>}/>}/>
+        <Route path='/' element={user ? <Index/> : <Cover component={<Login onLogin={loginData}/>}/>}/>
       </Routes>
       {/* <Signin></Signin> */}
     </div>
