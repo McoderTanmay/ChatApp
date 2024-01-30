@@ -9,7 +9,14 @@ const model=require('./model');
 const USER_ROUTER=require('./routers/accounts');
 
 app.use('/accounts',USER_ROUTER)
+//Database
+const {userModel,chatModel} = require('./model');
 
+//association
+userModel.hasMany(chatModel,{foreignKey:'senderID'});
+chatModel.belongsTo(userModel,{foreignKey:'senderID'});
+
+//syncronization
 model.db_config
 .sync({
 
