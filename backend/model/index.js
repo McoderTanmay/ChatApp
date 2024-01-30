@@ -1,6 +1,7 @@
 const sequelize=require('sequelize');
 const userModel=require('./users');
 const chatModel = require('./chat');
+const messageModel = require('./message');
 
 exports.db_config=new sequelize(
     'chat_app',
@@ -22,4 +23,5 @@ exports.db_config=new sequelize(
 );
 
 exports.userModel = userModel(exports.db_config);
-exports.chatModel = chatModel(exports.db_config); 
+exports.chatModel = chatModel(exports.db_config);
+exports.messageModel = messageModel(exports.db_config);

@@ -8,9 +8,12 @@ module.exports=(db_config)=>{
                 type:DataTypes.INTEGER,
                 allowNull:false,
             },
+            receiverID:{
+                type:DataTypes.INTEGER,
+                allowNull:false,
+            },
             message:{
                 type:DataTypes.TEXT,
-                allowNull:false,
             },
         }
     );
