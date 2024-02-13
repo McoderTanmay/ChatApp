@@ -51,7 +51,7 @@ module.exports = {
         let token = jwt.sign(payload,"randomkey",{expiresIn:"500h"});
         if (result) {
           return res.status(200)
-          .send({ code: 200, status:"successful", data: token})
+          .send({ code: 200, status:"successful", data: token, user: authData})
         }
         return res
         .status(400)
